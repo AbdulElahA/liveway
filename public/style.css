@@ -307,7 +307,7 @@ form .input-box input {
 }
 .container-card
 {
-    direction: ltr;
+    direction: rtl;
    display: flex;
    justify-content: center;
    align-items: center;
