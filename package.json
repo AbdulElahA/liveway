@@ -12,6 +12,9 @@
     "passport-discord": "^0.1.4",
     "socket.io": "^4.5.1"
   },
+  "engines": {
+    "node": "16.9.x"
+  },
   "name": "liveway",
   "version": "1.0.0",
   "main": "index.js",
