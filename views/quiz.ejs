@@ -73,8 +73,61 @@ button:hover{
         </style>
     </head>
     <body class="bg-dark text-white p-4">
-        <%- include('../partials/navbar.ejs') %>
-
+      <div class="nav-bar">
+        <img id="logoimageonphone" src="logo.png" href="/" alt="liveway" />
+        <nav class="navbar navbar-dark navbar-expand-md sticky-top p-3" style="margin: 20px 0 0 0;">
+            <div class="container-fluid">
+                <button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav ms-auto">
+                        <% if (user) { %>
+                            <li class="nav-item navigationitemsleft">
+                                <a class="nav-link login" href="/logout">تسجيل الخروج</a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-item navigationitemsleft">
+                                <a class="nav-link login" href="/login">تسجيل الدخول</a>
+                            </li>
+                        <% } %>   
+                        <li class="nav-item navigationitemsleft">
+                            <a class="nav-link" href="/crew">الرتب القيادية</a>
+                        </li>
+                        <li class="nav-item navigationitemsleft">
+                            <a class="nav-link" href="/infractions">نظام المخالفات</a>
+                        </li>
+     
+                    </ul>
+                </div>
+                <a href="/"><img id="logoimage"src="logo.png" /></a>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item navigationitemsright">
+                            <a class="nav-link" href="/recruitment">التوظيف</a>
+                        </li>
+                        <li class="nav-item navigationitemsright">
+                            <a class="nav-link" href="/protocols">البروتوكلات</a>
+                        </li>
+                        <li class="nav-item navigationitemsright">
+                            <a class="nav-link" href="/rules">القوانين</a>
+                        </li>
+                        <li class="nav-item navigationitemsright">
+                            <a class="nav-link" href="/">الرئيسية</a>
+                        </li>
+    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    
+    <script>
+        var allTags = document.getElementsByClassName("nav-link");
+        for (var i = 0, len = allTags.length; i < len; i++) {
+            if (window.location.pathname == allTags[i].pathname) {
+                allTags[i].classList.add("active")
+            }
+        }
+    </script>
         <div class="quiz-container" id="quiz">
             <div class="quiz-header">
               <h2 id="question">Question Text</h2>
