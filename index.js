@@ -132,14 +132,6 @@ app.get("/rules", async function(req, res) {
     });
 });
 
-app.get("/quiz", CheckAuth, async function(req, res) {
-    if(req.get('Referrer') !== "http://localhost:3000/recruitment") return res.redirect("/");
-    res.render(__dirname+'/views/quiz.ejs', {
-        user: req.user,
-        login: (req.isAuthenticated() ? "yes" : 'none')
-    });
-});
-
 app.post("/api/recruitment", async function(req, res) {
     try {
         const row = new ActionRowBuilder()
@@ -175,14 +167,24 @@ app.post("/api/recruitment", async function(req, res) {
     }
    
 });
+let allowed = [];
+app.get("/quiz", CheckAuth, async function(req, res) {
+  if (!allowed.includes(req.user.id)) return res.redirect("/");
+  res.render(__dirname+'/views/quiz.ejs', {
+      user: req.user,
+      login: (req.isAuthenticated() ? "yes" : 'none')
+  });
+  allowed = allowed.filter(x => x !== req.user.id);
+});
+
 io.on('connection', async (socket) => {
     client.on("interactionCreate", async (interaction) => {
         if(interaction.type !== InteractionType.MessageComponent) return;
         let type = interaction.customId == 'no' ? false : true
         io.emit('type', type);
-        interaction.message.delete().then(async (e) => {
-            await interaction.reply({ content: "✅ | **تم!**", ephemeral: true })
-        })
+        if(type) allowed.push(interaction.message.embeds[0].author.iconURL.split("/")[4]);
+        await interaction.reply({ content: "✅ | **تم!**", ephemeral: true })
+        interaction.message.delete()
     });
 });
 server.listen(process.env.PORT || 3000, () => {
