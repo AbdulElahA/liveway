@@ -403,16 +403,3 @@ form .input-box input {
     display: block;
     direction: rtl;
 }
-
-@media (max-width: 991px) {
-    .team .card {
-        width: 50%;
-        margin-bottom: 30px;
-    }
-    .boxes {
-        position: absulote;
-        top: -50%;
-        left: -50%;
-        transform: translate(-0%, 0%);
-    }
-}
