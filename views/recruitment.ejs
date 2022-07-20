@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>سيرفر لايف واي - قطاع وزارة الداخلية</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <meta name="description" content="Movement." />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/css/bootstrap.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css
+    "
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body class="bg-dark text-white p-4">
+        <%- include('../partials/navbar.ejs') %>
+
+        <div class="wrapper m">
+            <h2>الاتحاق بالخدمة العسكرية</h2>
+            <form id="form" style="direction: rtl;">
+              <div class="input-box">
+                <input name="name" type="text" placeholder="اسمك" required>
+              </div>
+              <div class="input-box">
+                <input name="age" type="number" placeholder="العمر" required>
+              </div>
+              <div class="input-box">
+                <input name="playerID" type="number" placeholder="ايدي اللاعب باللعبة" required>
+              </div>
+              <div class="input-box">
+                <input name="require" type="text" placeholder="الخبرات" required>
+              </div>
+              <div class="input-box">
+                <input name="reason" type="text" placeholder="سبب الدخول بالخدمة العسكرية" required>
+              </div>
+              <div class="input-box button">
+                <input type="Submit" value="!تأكيد">
+              </div>
+            </form>
+          </div>
+          <br><br><br>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/js/bootstrap.bundle.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+          <script>
+            $("#quiz").hide();
+            $("#form").submit(function(e) {
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                let form = $(this)
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/recruitment",
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function(data) {
+                        if (data == "Done!") {
+                            swal("يرجى الانتظار...", "يرجى الانتظار حتى يتم قبولك من قبل مشرفين التقديمات ، بإمكانك إغلاق هذه النافذة إذا اردت", "info");
+                        }
+                    }
+                });
+                
+            });
+            var socket = io();
+            socket.on('type', function(type) {
+                if(type) {
+                    window.location.replace("/quiz");
+                } else {
+                    swal("للأسف..", "للأسف تم رفضك", "error");
+                }
+            });
+          </script>
+    </body>
+</html>

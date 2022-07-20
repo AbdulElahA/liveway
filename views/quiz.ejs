@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>سيرفر لايف واي - قطاع وزارة الداخلية</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <meta name="description" content="Movement." />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/css/bootstrap.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css
+    "
+        />
+        <link rel="stylesheet" href="style.css" />
+        <style>
+            /* coding with nick */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+
+*{
+  box-sizing: border-box;
+}
+
+.quiz-container{
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+  width: 600px;
+  overflow: hidden;
+  color: black;
+  display: block;
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  direction: rtl;
+}
+.quiz-header{
+  padding: 4rem;
+}
+h2{
+  padding: 1rem;
+  text-align: center;
+  margin: 0;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+}
+ul li{
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+ul li label{
+  cursor: pointer;
+}
+button{
+  background-color: #0275d8;
+  color: #fff;
+  border: none;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: inherit;
+  padding: 1.3rem;
+}
+button:hover{
+  background-color: #0274d8d9;
+}
+
+        </style>
+    </head>
+    <body class="bg-dark text-white p-4">
+        <%- include('../partials/navbar.ejs') %>
+
+        <div class="quiz-container" id="quiz">
+            <div class="quiz-header">
+              <h2 id="question">Question Text</h2>
+              <ul>
+                <li>
+                  <input type="radio" name="answer" id="a" class="answer">
+                  <label for="a" id="a_text">Answer</label>
+                </li>
+        
+                <li>
+                  <input type="radio" name="answer" id="b" class="answer">
+                  <label for="b" id="b_text">Answer</label>
+                </li>
+        
+                <li>
+                  <input type="radio" name="answer" id="c" class="answer">
+                  <label for="c" id="c_text">Answer</label>
+                </li>
+        
+                <li>
+                  <input type="radio" name="answer" id="d" class="answer">
+                  <label for="d" id="d_text">Answer</label>
+                </li>
+        
+              </ul>
+            </div>
+        
+            <button id="submit">التالي</button>
+        
+          </div>
+            
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/js/bootstrap.bundle.min.js"></script>
+        <script>
+        const _0x3ac6d2=_0x4bb2;(function(_0x2e6d7c,_0x55202c){const _0x28b4f3=_0x4bb2,_0x34c5ba=_0x2e6d7c();while(!![]){try{const _0x1e394b=parseInt(_0x28b4f3(0x189))/0x1+parseInt(_0x28b4f3(0x1bc))/0x2*(parseInt(_0x28b4f3(0x196))/0x3)+parseInt(_0x28b4f3(0x19e))/0x4*(-parseInt(_0x28b4f3(0x191))/0x5)+parseInt(_0x28b4f3(0x1b0))/0x6+-parseInt(_0x28b4f3(0x1b2))/0x7+-parseInt(_0x28b4f3(0x1bb))/0x8*(-parseInt(_0x28b4f3(0x18f))/0x9)+parseInt(_0x28b4f3(0x1a9))/0xa;if(_0x1e394b===_0x55202c)break;else _0x34c5ba['push'](_0x34c5ba['shift']());}catch(_0x6a969b){_0x34c5ba['push'](_0x34c5ba['shift']());}}}(_0x1dfa,0xdff29));function _0x1dfa(){const _0x435efa=['مامعنى\x201-10\x20في\x20البرتوكلات\x20العسكرية','quiz','تقول\x20اسمك\x20و\x20ايديك','\x20ماهو\x20السلاح\x20المسموح\x20لك\x20في\x20المجهورات\x20والبقالات\x20؟','.answer','22616230xMVijR','querySelectorAll','اطلع\x20من\x20الصف\x20وطلع\x20موتر','مامعنى\x203-20\x20في\x20البرتوكلات\x20العسكرية\x20؟','question','سرقة\x20البنك\x20المركزي','استريح','997296NZIeqE','هل\x20يسمح\x20لك\x20تشغيل\x20السفتي\x20والطلق\x20في\x20الملكية\x20؟','10653762BsvHeH','forEach','getElementById','كيف\x20تسجل\x20دخولك\x20بالراديو\x20؟','من\x20يونتك\x20تسجيل\x20دخول\x20توجيهاتك\x20يامركز\x20العمليات','addEventListener','كم\x20أعلى\x20مدة\x20سجن\x20مسموح\x20لك\x20؟','سرقة\x20مصرف','submit','556360jEyOmd','35602ucvLRq','d_text','\x20ما\x20معنى\x20كود\x207\x20في\x20البروتوكلات\x20العسكرية\x20؟','سرقة\x20بقالة','display','b_text','innerHTML','انهاء\x20البلاغ','AP\x20PISTOL','الموكب\x20يتحرك','صف\x20عسكري','مامعنى\x205-10\x20في\x20البرتوكلات\x20العسكرية\x20؟','ما\x20معنى\x20كود\x202\x20في\x20البروتوكلات\x20العسكرية\x20؟','نعم','none','هل\x20يجب\x20عليك\x20احترام\x20المواطن\x20سواء\x20كان\x20متهم\x20او\x20بريء\x20؟','310352VOPKka','تحية','a_text','length','مامعنى\x203-10\x20في\x20البرتوكلات\x20العسكرية\x20؟\x20','في\x20حال\x20انك\x20مسكت\x20شخص\x20واتضح\x20لك\x20بالهوية\x20انه\x20عضو\x20عصابة\x20هل\x20تمسكه\x20؟\x20','45hBfmqn','correct','3322310CipvBI','مطاردة\x20مركبة','استيقاف\x20مركبه','block','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>نتيجتك:\x20','3vyxvcs','ما\x20معنى\x20كود\x201\x20في\x20البروتوكلات\x20العسكرية\x20؟','حالة\x20كراش','ما\x20معنى\x20كود\x2010\x20في\x20البروتوكلات\x20العسكرية\x20؟','الموكب\x20يوقف','innerText','في\x20حال\x20انه\x20ركب\x20مواطن\x20دوريتك\x20(\x20سيارتك\x20العسكرية\x20)\x20هل\x20يحق\x20لك\x20الطلق\x20الفوري\x20على\x20المواطن\x20؟','هل\x20يجب\x20عليك\x20وضع\x20(Push\x20to\x20Talk\x20في\x20الراديو)','4BiKdex','parentNode','مامعنى\x200-10\x20في\x20البرتوكلات\x20العسكرية','checked','مامعنى\x2010-10\x20في\x20البرتوكلات\x20العسكرية\x20؟','style'];_0x1dfa=function(){return _0x435efa;};return _0x1dfa();}const quizData=[{'question':_0x3ac6d2(0x188),'a':_0x3ac6d2(0x186),'b':'لا','correct':'a'},{'question':'\x20في\x20حال\x20انك\x20تطارد\x20مجرم\x20متى\x20يسمح\x20لك\x20الصدم\x20الاحترافي','a':'5','b':'15','c':'30','correct':'a'},{'question':'\x20في\x20حال\x20المطارده\x20بعد\x20كم\x20ثانيه\x20يحق\x20لك\x20الطلق\x20على\x20كفرات\x20الهارب\x20؟','a':'5','b':'15','c':'30','correct':'b'},{'question':_0x3ac6d2(0x1b8),'a':'5','b':'10','c':'15','correct':'c'},{'question':_0x3ac6d2(0x18e),'a':_0x3ac6d2(0x186),'b':'لا','correct':'b'},{'question':_0x3ac6d2(0x1b1),'a':_0x3ac6d2(0x186),'b':'لا','correct':'b'},{'question':_0x3ac6d2(0x1a7),'a':_0x3ac6d2(0x181),'b':'ASSAULT\x20RIFLE','c':'SNIPER','correct':'a'},{'question':'هل\x20يحق\x20لك\x20استعمال\x20السسنايبر\x20في\x20السيناريوهات\x20؟','a':_0x3ac6d2(0x186),'b':'لا\x20وعقوبتها\x20مفصول\x20وزاريا','correct':'b'},{'question':_0x3ac6d2(0x19d),'a':_0x3ac6d2(0x186),'b':'لا','correct':'a'},{'question':_0x3ac6d2(0x19c),'a':_0x3ac6d2(0x186),'b':'لا','correct':'a'},{'question':_0x3ac6d2(0x1b5),'a':_0x3ac6d2(0x1b6),'b':_0x3ac6d2(0x1a6),'correct':'a'},{'question':_0x3ac6d2(0x1a0),'a':_0x3ac6d2(0x180),'b':_0x3ac6d2(0x192),'c':'استيقاف\x20مركبه','correct':'a'},{'question':_0x3ac6d2(0x1a4),'a':_0x3ac6d2(0x180),'b':'مطاردة\x20مركبة','c':_0x3ac6d2(0x193),'correct':'b'},{'question':_0x3ac6d2(0x18d),'a':_0x3ac6d2(0x180),'b':_0x3ac6d2(0x192),'c':'استيقاف\x20مركبه','correct':'c'},{'question':_0x3ac6d2(0x184),'a':_0x3ac6d2(0x1b9),'b':_0x3ac6d2(0x1ae),'c':_0x3ac6d2(0x17c),'correct':'c'},{'question':_0x3ac6d2(0x1a2),'a':'سرقة\x20مصرف','b':_0x3ac6d2(0x1ae),'c':_0x3ac6d2(0x17c),'correct':'b'},{'question':_0x3ac6d2(0x1ac),'a':'تجمع\x20عصابات','b':'تبادل\x20اطلاق\x20نار','c':'احتاج\x20دعم','correct':'c'},{'question':_0x3ac6d2(0x197),'a':_0x3ac6d2(0x18a),'b':_0x3ac6d2(0x1af),'correct':'a'},{'question':_0x3ac6d2(0x185),'a':_0x3ac6d2(0x18a),'b':_0x3ac6d2(0x1af),'correct':'b'},{'question':'ما\x20معنى\x20كود\x203\x20في\x20البروتوكلات\x20العسكرية\x20؟','a':_0x3ac6d2(0x183),'b':_0x3ac6d2(0x1ab),'correct':'a'},{'question':_0x3ac6d2(0x17b),'a':_0x3ac6d2(0x182),'b':_0x3ac6d2(0x19a),'correct':'a'},{'question':_0x3ac6d2(0x199),'a':'غفوة','b':_0x3ac6d2(0x198),'correct':'a'}],quiz=document[_0x3ac6d2(0x1b4)](_0x3ac6d2(0x1a5)),answerEls=document[_0x3ac6d2(0x1aa)](_0x3ac6d2(0x1a8)),questionEl=document[_0x3ac6d2(0x1b4)](_0x3ac6d2(0x1ad)),a_text=document['getElementById'](_0x3ac6d2(0x18b)),b_text=document['getElementById'](_0x3ac6d2(0x17e)),c_text=document['getElementById']('c_text'),d_text=document[_0x3ac6d2(0x1b4)](_0x3ac6d2(0x1bd)),submitBtn=document[_0x3ac6d2(0x1b4)](_0x3ac6d2(0x1ba));let currentQuiz=0x0,score=0x0;function _0x4bb2(_0x28f585,_0x40ccbc){const _0x1dfa7e=_0x1dfa();return _0x4bb2=function(_0x4bb2cf,_0xd3d38c){_0x4bb2cf=_0x4bb2cf-0x17b;let _0x4ad695=_0x1dfa7e[_0x4bb2cf];return _0x4ad695;},_0x4bb2(_0x28f585,_0x40ccbc);}loadQuiz();function loadQuiz(){const _0x2a195c=_0x3ac6d2;deselectAnswers();const _0x5c4448=quizData[currentQuiz];a_text['parentNode'][_0x2a195c(0x1a3)][_0x2a195c(0x17d)]=!quizData[currentQuiz]['a']?'none':_0x2a195c(0x194),b_text[_0x2a195c(0x19f)][_0x2a195c(0x1a3)][_0x2a195c(0x17d)]=!quizData[currentQuiz]['b']?'none':_0x2a195c(0x194),c_text[_0x2a195c(0x19f)][_0x2a195c(0x1a3)][_0x2a195c(0x17d)]=!quizData[currentQuiz]['c']?_0x2a195c(0x187):_0x2a195c(0x194),d_text['parentNode'][_0x2a195c(0x1a3)]['display']=!quizData[currentQuiz]['d']?_0x2a195c(0x187):_0x2a195c(0x194),questionEl[_0x2a195c(0x19b)]=_0x5c4448[_0x2a195c(0x1ad)],a_text[_0x2a195c(0x19b)]=_0x5c4448['a'],b_text[_0x2a195c(0x19b)]=_0x5c4448['b'],c_text[_0x2a195c(0x19b)]=_0x5c4448['c'],d_text['innerText']=_0x5c4448['d'];}function deselectAnswers(){const _0x25da56=_0x3ac6d2;answerEls[_0x25da56(0x1b3)](_0x2bcea6=>_0x2bcea6[_0x25da56(0x1a1)]=![]);}function getSelected(){const _0x59ff7d=_0x3ac6d2;let _0x95a9ec;return answerEls[_0x59ff7d(0x1b3)](_0x3b02d0=>{const _0x4b6e72=_0x59ff7d;_0x3b02d0[_0x4b6e72(0x1a1)]&&(_0x95a9ec=_0x3b02d0['id']);}),_0x95a9ec;}submitBtn[_0x3ac6d2(0x1b7)]('click',()=>{const _0x8e50a=_0x3ac6d2,_0x5d5b39=getSelected();_0x5d5b39&&(_0x5d5b39===quizData[currentQuiz][_0x8e50a(0x190)]&&score++,currentQuiz++,currentQuiz<quizData[_0x8e50a(0x18c)]?loadQuiz():quiz[_0x8e50a(0x17f)]=_0x8e50a(0x195)+score+'/'+quizData[_0x8e50a(0x18c)]+'</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20');});
+        </script>
+    </body>
+</html>
