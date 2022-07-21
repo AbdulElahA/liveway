@@ -5,7 +5,6 @@ const { Strategy } = require("passport-discord");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const app = express();
-var process.env = require("./process.env.json");
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
