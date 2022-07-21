@@ -5,7 +5,7 @@ const { Strategy } = require("passport-discord");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const app = express();
-var config = require("./config.json");
+var process.env = require("./process.env.json");
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -16,7 +16,7 @@ const { Client, GatewayIntentBits, Partials, EmbedBuilder, ActionRowBuilder, But
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds], partials: [Partials.Channel] });
   
-client.login(config.token);
+client.login(process.env.token);
 
 client.on("ready", () => {
   console.log(`Ready ! , ${client.user.tag}`)
@@ -34,9 +34,9 @@ var scopes = ["identify", "guilds"];
 passport.use(
   new Strategy(
     {
-      clientID: config.id,
-      clientSecret: config.secret,
-      callbackURL: `${config.websiteurl}/login`,
+      clientID: process.env.id,
+      clientSecret: process.env.secret,
+      callbackURL: `${process.env.websiteurl}/login`,
       scope: scopes
     },
     function(accessToken, refreshToken, profile, done) {
