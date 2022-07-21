@@ -5,22 +5,27 @@ const { Strategy } = require("passport-discord");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const app = express();
-var process.env = require("./process.env.json");
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const Discord = require('discord.js');
-const { Client, GatewayIntentBits, Partials, EmbedBuilder, ActionRowBuilder, ButtonBuilder, InteractionType } = require('discord.js');
+const Eris = require("eris");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds], partials: [Partials.Channel] });
-  
-client.login(process.env.token);
+const Constants = Eris.Constants;
 
-client.on("ready", () => {
-  console.log(`Ready ! , ${client.user.tag}`)
-})
+const bot = new Eris(process.env.token, {
+  intents: [
+    "guilds",
+    "guildMessages"
+  ]
+});
+
+bot.connect();  
+
+bot.on("ready", () => {
+  console.log("Ready!");
+});
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -134,33 +139,65 @@ app.get("/rules", async function(req, res) {
 
 app.post("/api/recruitment", async function(req, res) {
     try {
-        const row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('yes')
-                    .setLabel('قبول')
-                    .setStyle(3)
-                    .setEmoji('✅'),
-                new ButtonBuilder()
-                    .setCustomId('no')
-                    .setLabel('رفض')
-                    .setStyle(4)
-                    .setEmoji('❌'),
-            );
-
-        const exampleEmbed = new EmbedBuilder()
-            .setTitle('تقديم جديد!')
-            .setAuthor({ name: req.user.username, iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.${req.user.avatar.startsWith("a_") ? "gif" : "jpg"}?size=1024`})
-            .addFields(
-                { name: 'الاسم', value: req.body.name, inline: true },
-                { name: 'العمر', value: req.body.age, inline: true },
-                { name: 'ايدي اللاعب', value: req.body.playerID, inline: true },
-                { name: 'خبرات اللاعب', value: req.body.require, inline: true },
-                { name: 'سبب التحاقه', value: req.body.reason, inline: true },
-            )
-            .setTimestamp()
-        client.channels.cache.get("999031978626121839").send({ embeds: [exampleEmbed], components: [row] });
-        res.send("Done!")
+        bot.createMessage("999031978626121839", {
+          components: [
+              {
+                  type: Constants.ComponentTypes.ACTION_ROW, 
+                  components: [
+                      {
+                        type: Constants.ComponentTypes.BUTTON,
+                        style: Constants.ButtonStyles.SECONDARY,
+                        custom_id: "yes",
+                        label: "قبول",
+                        emoji: "✅",
+                        disabled: false
+                      }, {
+                        type: Constants.ComponentTypes.BUTTON,
+                        style: Constants.ButtonStyles.DANGER,
+                        custom_id: "no",
+                        label: "رفض",
+                        emoji: "❌",
+                        disabled: false
+                      }
+                  ]
+              }
+          ], embeds: [{
+              title: "تقديم جديد!",
+              author: { 
+                  name: req.user.username,
+                  icon_url: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.${req.user.avatar.startsWith("a_") ? "gif" : "jpg"}?size=1024`
+              },
+              // color: 0x008000,
+              fields: [ 
+                  {
+                    name: "الاسم",
+                    value: req.body.name,
+                    inline: true
+                  },
+                  {
+                    name: "العمر",
+                    value: req.body.age,
+                    inline: true
+                  },
+                  {
+                    name: "ايدي اللاعب",
+                    value: req.body.playerID,
+                    inline: true
+                  },
+                  {
+                    name: "خبرات اللاعب",
+                    value: req.body.require,
+                    inline: true
+                  },
+                  {
+                    name: "سبب التحاقه",
+                    value: req.body.reason,
+                    inline: true
+                  }
+              ]
+          }]
+      });
+      res.send("Done!")
     } catch (error) {
         res.send(error)
         console.log(error);
@@ -178,14 +215,15 @@ app.get("/quiz", CheckAuth, async function(req, res) {
 });
 
 io.on('connection', async (socket) => {
-    client.on("interactionCreate", async (interaction) => {
-        if(interaction.type !== InteractionType.MessageComponent) return;
-        let type = interaction.customId == 'no' ? false : true
+  bot.on("interactionCreate", (interaction) => {
+    if(interaction instanceof Eris.ComponentInteraction) {
+        let type = interaction.id == 'no' ? false : true
         io.emit('type', type);
-        if(type) allowed.push(interaction.message.embeds[0].author.iconURL.split("/")[4]);
-        await interaction.reply({ content: "✅ | **تم!**", ephemeral: true })
+        if(type) allowed.push(interaction.message.embeds[0].author.icon_url.split("/")[4]);
+        await interaction.createMessage({ content: "✅ | **تم!**", flags: 64 })
         interaction.message.delete()
-    });
+    }
+  });
 });
 server.listen(process.env.PORT || 3000, () => {
     console.log('listening on *:80');
