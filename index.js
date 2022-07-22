@@ -81,23 +81,11 @@ function CheckAuth(req, res, next) {
   }
 }
 
-app.get('/login', function(req, res, next) {
-  passport.authenticate('discord', function(err, user, info) {
-    if (err) {
-      return next(err); // will generate a 500 error
-    }
-    // Generate a JSON response reflecting authentication status
-    if (! user) {
-      return res.send(401,{ success : false, message : 'authentication failed' });
-    }
-    req.login(user, function(err){
-      if(err){
-        return next(err);
-      }
-      return res.send({ success : true, message : 'authentication succeeded' });        
-    });
-  })(req, res, next);
-});
+app.get('/login', passport.authenticate('discord', {
+    failureRedirect: '/',
+    successRedirect: '/'
+}));
+
 app.get("/logout", async function(req, res) {
     req.logout(function(err) {
         if (err) { return next(err); }
