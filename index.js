@@ -83,7 +83,9 @@ function CheckAuth(req, res, next) {
 
 app.get(
   "/login",
-  passport.authenticate("discord", { failureRedirect: "/" }),
+  passport.authenticate("discord", {  successRedirect: '/',
+  failureRedirect: '/login', // see text
+  failureFlash: true }),
   async function(req, res) {
     res.redirect("/");
   }
