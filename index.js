@@ -81,10 +81,12 @@ function CheckAuth(req, res, next) {
   }
 }
 
-app.get('/login', passport.authenticate('discord', {
-    failureRedirect: '/',
-    successRedirect: '/'
-}));
+    auth.get('/discord/callback', passport.authenticate('discord', {
+        failureRedirect: '/'
+    }), function (req, res) {
+        res.writeHead(301, { Location: Core.webProtocol + '://' + Core.webUrl });
+        res.end();
+    });
 
 app.get("/logout", async function(req, res) {
     req.logout(function(err) {
