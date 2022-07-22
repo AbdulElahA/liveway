@@ -139,6 +139,7 @@ app.get("/rules", async function(req, res) {
 });
 
 app.post("/api/recruitment", async function(req, res) {
+    console.log(req.user)
     try {
         bot.createMessage("999031978626121839", {
           components: [
