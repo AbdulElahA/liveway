@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
@@ -14,7 +15,7 @@ const Eris = require("eris");
 
 const Constants = Eris.Constants;
 
-const bot = new Eris(process.env.token, {
+const bot = new Eris(process.env.TOKEN, {
   intents: [
     "guilds",
     "guildMessages"
@@ -39,9 +40,9 @@ var scopes = ["identify", "guilds"];
 passport.use(
   new Strategy(
     {
-      clientID: process.env.id,
-      clientSecret: process.env.secret,
-      callbackURL: `${process.env.websiteurl}/login`,
+      clientID: process.env.ID,
+      clientSecret: process.env.SECRET,
+      callbackURL: `${process.env.WEBSITEURL}/login`,
       scope: scopes
     },
     function(accessToken, refreshToken, profile, done) {
@@ -149,14 +150,20 @@ app.post("/api/recruitment", async function(req, res) {
                         style: Constants.ButtonStyles.SECONDARY,
                         custom_id: "yes",
                         label: "قبول",
-                        emoji: "✅",
+                        emoji: {
+                          "id": null,
+                          "name": "✅"
+                        },
                         disabled: false
                       }, {
                         type: Constants.ComponentTypes.BUTTON,
                         style: Constants.ButtonStyles.DANGER,
                         custom_id: "no",
                         label: "رفض",
-                        emoji: "❌",
+                        emoji: {
+                          "id": null,
+                          "name": "❌"
+                        },
                         disabled: false
                       }
                   ]
@@ -215,13 +222,13 @@ app.get("/quiz", CheckAuth, async function(req, res) {
 });
 
 io.on('connection', async (socket) => {
-  bot.on("interactionCreate", (interaction) => {
+  bot.on("interactionCreate", async (interaction) => {
     if(interaction instanceof Eris.ComponentInteraction) {
-        let type = interaction.id == 'no' ? false : true
+        let type = interaction.data.custom_id == 'no' ? false : true
         io.emit('type', type);
         if(type) allowed.push(interaction.message.embeds[0].author.icon_url.split("/")[4]);
-        await interaction.createMessage({ content: "✅ | **تم!**", flags: 64 })
         interaction.message.delete()
+        await interaction.createMessage({ content: "✅ | **تم!**", flags: 64 })
     }
   });
 });
