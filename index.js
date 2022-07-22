@@ -81,7 +81,7 @@ function CheckAuth(req, res, next) {
   }
 }
 
-app.post('/login', function(req, res, next) {
+app.get('/login', function(req, res, next) {
   passport.authenticate('discord', function(err, user, info) {
     if (err) {
       return next(err); // will generate a 500 error
