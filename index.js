@@ -73,20 +73,39 @@ app.use(
   })
 );
 
-function CheckAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    return res.redirect("/login");
+  function checkAuth(req, res, next) {
+    if (req.isAuthenticated()) return next();
+    req.session.backURL = req.url;
+    res.redirect("/login");
   }
-}
 
-    app.get('/login', passport.authenticate('discord', {
-        failureRedirect: '/'
-    }), function (req, res) {
-        res.writeHead(301, {'Location' : 'https://interior-ministry.ml'});
-        res.end();
-    });
+  app.get("/login", (req, res, next) => {
+    if (req.session.backURL) {
+      req.session.backURL = req.session.backURL;
+    } else if (req.headers.referer) {
+      const parsed = url.parse(req.headers.referer);
+      if (parsed.hostname === app.locals.domain) {
+        req.session.backURL = parsed.path;
+      }
+    } else {
+      req.session.backURL = "/";
+    }
+    next();
+  },
+  passport.authenticate("discord"));
+
+  // Once the user returns from OAuth2, this endpoint gets called. 
+  // Here we check if the user was already on the page and redirect them
+  // there, mostly.
+  app.get("/login/callback", passport.authenticate("discord", { failureRedirect: "/autherror" }), (req, res) => {
+    if (req.session.backURL) {
+      const url = req.session.backURL;
+      req.session.backURL = null;
+      res.redirect(url);
+    } else {
+      res.redirect("/");
+    }
+  });
 
 app.get("/logout", async function(req, res) {
     req.logout(function(err) {
