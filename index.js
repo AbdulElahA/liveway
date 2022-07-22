@@ -84,7 +84,7 @@ function CheckAuth(req, res, next) {
     app.get('/login', passport.authenticate('discord', {
         failureRedirect: '/'
     }), function (req, res) {
-        res.writeHead(301, { Location: Core.webProtocol + '://' + Core.webUrl });
+        res.writeHead(301, {'Location' : 'https://interior-ministry.ml'});
         res.end();
     });
 
