@@ -81,7 +81,7 @@ function CheckAuth(req, res, next) {
   }
 }
 
-    auth.get('/discord/callback', passport.authenticate('discord', {
+    app.get('/login', passport.authenticate('discord', {
         failureRedirect: '/'
     }), function (req, res) {
         res.writeHead(301, { Location: Core.webProtocol + '://' + Core.webUrl });
