@@ -112,6 +112,10 @@
                         if (data == "Done!") {
                             swal("يرجى الانتظار...", "يرجى الانتظار حتى يتم قبولك من قبل مشرفين التقديمات ، بإمكانك إغلاق هذه النافذة إذا اردت", "info");
                         }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
                 
