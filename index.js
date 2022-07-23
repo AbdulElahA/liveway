@@ -11,6 +11,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const helmet = require("helmet");
 
 const Eris = require("eris");
 
@@ -78,6 +79,7 @@ app
 app.use(bodyParser.json());
 app.use(express.static("views"));
 app.use(express.static("public"));
+app.use(helmet());
 app.set("view engine", "ejs");
 app.use(
   express.urlencoded({
@@ -151,7 +153,6 @@ app.get("/rules", async function(req, res) {
 });
 
 app.post("/api/recruitment", async function(req, res) {
-    console.log(req.user)
     try {
         bot.createMessage("999031978626121839", {
           components: [
@@ -240,8 +241,8 @@ io.on('connection', async (socket) => {
         let type = interaction.data.custom_id == 'no' ? false : true
         io.emit('type', type);
         if(type) allowed.push(interaction.message.embeds[0].author.icon_url.split("/")[4]);
-        await interaction.message.delete()
         await interaction.createMessage({ content: "✅ | **تم!**", flags: 64 })
+        await bot.deleteMessage(interaction.channel.id, interaction.message.id)
     }
   });
 });
