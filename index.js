@@ -120,6 +120,7 @@ app.get("/logout", async function(req, res) {
 });
 
 app.get("/", async function(req, res) {
+    console.log(req)
   res.render(__dirname+'/views/index.ejs', {
       user: req.user,
       login: (req.logged_in ? "yes" : 'none')
