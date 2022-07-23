@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
+const NedbStore = require('nedb-session-store')(session);
 const { Strategy } = require("passport-discord");
 const bodyParser = require("body-parser");
 const fs = require("fs");
@@ -12,6 +13,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 const Eris = require("eris");
+const helmet = require("helmet");
 
 const Constants = Eris.Constants;
 
@@ -53,19 +55,24 @@ passport.use(
   )
 );
 
-app
-  .use(
-    session({
-      secret: "VeyWP@6Fy9e83W@qId$#S0mE0iKayXwMJ!1IZ&V&gLnrnFfjq731YM8RnmESB9r7G2S4@E$uIESEwK#K@gOq7D9P3uG2Mzl&Ocx",
-      resave: false,
-      saveUninitialized: false
-    })
-  )
-  .use(passport.initialize())
-  .use(passport.session());
+app.use(session({
+  store: new NedbStore({
+    filename: './data/ne.db'
+  }),
+  secret: process.env.SESSIONSECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 365 * 24 * 60 * 60 * 1000   // e.g. 1 year
+  },
+}));
+
 app.use(bodyParser.json());
 app.use(express.static("views"));
 app.use(express.static("public"));
+app.use(helmet());
 app.set("view engine", "ejs");
 app.use(
   express.urlencoded({

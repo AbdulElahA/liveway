@@ -9,6 +9,8 @@
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "googleapis": "^105.0.0",
+    "helmet": "^5.1.0",
+    "nedb-session-store": "^1.1.2",
     "passport": "^0.6.0",
     "passport-discord": "^0.1.4",
     "socket.io": "^4.5.1"
