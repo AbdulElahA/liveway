@@ -98,36 +98,34 @@
           <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
           <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
           <script>
-            $("#form").submit(function(e) {
+            $( document ).ready(function() {
+                $("#form").submit(function(e) {
 
-                e.preventDefault(); // avoid to execute the actual submit of the form.
+                    e.preventDefault(); // avoid to execute the actual submit of the form.
 
-                let form = $(this)
+                    let form = $(this)
 
-                $.ajax({
-                    type: "POST",
-                    url: "/api/recruitment",
-                    data: form.serialize(), // serializes the form's elements.
-                    success: function(data) {
-                        if (data == "Done!") {
-                            swal("يرجى الانتظار...", "يرجى الانتظار حتى يتم قبولك من قبل مشرفين التقديمات ، بإمكانك إغلاق هذه النافذة إذا اردت", "info");
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/recruitment",
+                        data: form.serialize(), // serializes the form's elements.
+                        success: function(data) {
+                            if (data == "Done!") {
+                                swal("يرجى الانتظار...", "يرجى الانتظار حتى يتم قبولك من قبل مشرفين التقديمات ، بإمكانك إغلاق هذه النافذة إذا اردت", "info");
+                            }
                         }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
-                        alert(thrownError);
+                    });
+                });
+                var socket = io();
+                socket.on('type', function(type) {
+                    if(type) {
+                        window.location.replace("/quiz");
+                    } else {
+                        swal("للأسف..", "للأسف تم رفضك", "error");
                     }
                 });
-                
             });
-            var socket = io();
-            socket.on('type', function(type) {
-                if(type) {
-                    window.location.replace("/quiz");
-                } else {
-                    swal("للأسف..", "للأسف تم رفضك", "error");
-                }
-            });
+
           </script>
     </body>
 </html>
