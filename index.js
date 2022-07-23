@@ -95,7 +95,7 @@ app.use(
 );
 
 function CheckAuth(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.logged_in) {
     return next();
   } else {
     return res.redirect("/login");
@@ -120,42 +120,42 @@ app.get("/logout", async function(req, res) {
 app.get("/", async function(req, res) {
   res.render(__dirname+'/views/index.ejs', {
       user: req.user,
-      login: (req.isAuthenticated() ? "yes" : 'none')
+      login: (req.logged_in ? "yes" : 'none')
   });
 });
 
 app.get("/crew", async function(req, res) {
     res.render(__dirname+'/views/crew.ejs', {
         user: req.user,
-        login: (req.isAuthenticated() ? "yes" : 'none')
+        login: (req.logged_in ? "yes" : 'none')
     });
 });
 
 app.get("/infractions", async function(req, res) {
     res.render(__dirname+'/views/infractions.ejs', {
         user: req.user,
-        login: (req.isAuthenticated() ? "yes" : 'none')
+        login: (req.logged_in ? "yes" : 'none')
     });
 });
 
 app.get("/protocols", async function(req, res) {
     res.render(__dirname+'/views/protocols.ejs', {
         user: req.user,
-        login: (req.isAuthenticated() ? "yes" : 'none')
+        login: (req.logged_in ? "yes" : 'none')
     });
 });
 
 app.get("/recruitment", CheckAuth, async function(req, res) {
     res.render(__dirname+'/views/recruitment.ejs', {
         user: req.user,
-        login: (req.isAuthenticated() ? "yes" : 'none')
+        login: (req.logged_in ? "yes" : 'none')
     });
 });
 
 app.get("/rules", async function(req, res) {
     res.render(__dirname+'/views/rules.ejs', {
         user: req.user,
-        login: (req.isAuthenticated() ? "yes" : 'none')
+        login: (req.logged_in ? "yes" : 'none')
     });
 });
 
@@ -238,7 +238,7 @@ app.get("/quiz", CheckAuth, async function(req, res) {
   if (!allowed.includes(req.user.id)) return res.redirect("/");
   res.render(__dirname+'/views/quiz.ejs', {
       user: req.user,
-      login: (req.isAuthenticated() ? "yes" : 'none')
+      login: (req.logged_in ? "yes" : 'none')
   });
   allowed = allowed.filter(x => x !== req.user.id);
 });
