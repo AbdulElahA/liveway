@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
-const NedbStore = require('nedb-session-store')(session);
+const { DynamoDBStore } = require('./dynamodb-store')
 const { Strategy } = require("passport-discord");
 const bodyParser = require("body-parser");
 const fs = require("fs");
@@ -16,6 +16,22 @@ const Eris = require("eris");
 const helmet = require("helmet");
 
 const Constants = Eris.Constants;
+
+const dynamoOpts = {
+  table: {
+    name: process.env.CYCLIC_DB,
+    hashKey: 'pk',
+    hashPrefix: 'sid_',
+    sortKey: 'sk',
+    create: false
+  },
+  // dynamoConfig: {
+  //   endpoint: process.env.AWS_DYNAMO_ENDPOINT,
+  // },
+  keepExpired: false,
+  touchInterval: oneHourMs,
+  ttl: oneDayMs
+}
 
 const bot = new Eris(process.env.TOKEN, {
   intents: [
@@ -56,9 +72,7 @@ passport.use(
 );
 
 app.use(session({
-  store: new NedbStore({
-    filename: './data/ne.db'
-  }),
+  store: new DynamoDBStore(dynamoOpts),
   secret: process.env.SESSIONSECRET,
   resave: false,
   saveUninitialized: false,
