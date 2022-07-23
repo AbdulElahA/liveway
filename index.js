@@ -2,9 +2,9 @@ require('dotenv').config()
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
-const { DynamoDBStore } = require('./dynamodb-store')
 const { Strategy } = require("passport-discord");
 const bodyParser = require("body-parser");
+const MongoDBStore = require('connect-mongodb-session')(session);
 const fs = require("fs");
 const app = express();
 const http = require('http');
@@ -13,27 +13,8 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 const Eris = require("eris");
-const helmet = require("helmet");
 
 const Constants = Eris.Constants;
-const oneHourMs = 60 * 60 * 1000
-const oneDayMs = 24 * oneHourMs
-
-const dynamoOpts = {
-  table: {
-    name: process.env.CYCLIC_DB,
-    hashKey: 'pk',
-    hashPrefix: 'sid_',
-    sortKey: 'sk',
-    create: false
-  },
-  // dynamoConfig: {
-  //   endpoint: process.env.AWS_DYNAMO_ENDPOINT,
-  // },
-  keepExpired: false,
-  touchInterval: oneHourMs,
-  ttl: oneDayMs
-}
 
 const bot = new Eris(process.env.TOKEN, {
   intents: [
@@ -47,6 +28,16 @@ bot.connect();
 bot.on("ready", () => {
   console.log("Ready!");
 });
+
+var store = new MongoDBStore(
+  {
+    uri: process.env.MONGOURI,
+    databaseName: 'sessions',
+    collection: 'mySessions'
+  },
+  function(error) {
+    console.error(error)
+  });
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -73,22 +64,19 @@ passport.use(
   )
 );
 
-app.use(session({
-  store: new DynamoDBStore(dynamoOpts),
-  secret: process.env.SESSIONSECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    path: '/',
-    httpOnly: true,
-    maxAge: 365 * 24 * 60 * 60 * 1000   // e.g. 1 year
-  },
-}));
-
+app
+  .use(
+    session({
+      secret: "VeyWP@6Fy9e83W@qId$#S0mE0iKayXwMJ!1IZ&V&gLnrnFfjq731YM8RnmESB9r7G2S4@E$uIESEwK#K@gOq7D9P3uG2Mzl&Ocx",
+      resave: false,
+      saveUninitialized: false
+    })
+  )
+  .use(passport.initialize())
+  .use(passport.session());
 app.use(bodyParser.json());
 app.use(express.static("views"));
 app.use(express.static("public"));
-app.use(helmet());
 app.set("view engine", "ejs");
 app.use(
   express.urlencoded({
@@ -97,7 +85,7 @@ app.use(
 );
 
 function CheckAuth(req, res, next) {
-  if (req.logged_in) {
+  if (req.isAuthenticated()) {
     return next();
   } else {
     return res.redirect("/login");
@@ -122,42 +110,42 @@ app.get("/logout", async function(req, res) {
 app.get("/", async function(req, res) {
   res.render(__dirname+'/views/index.ejs', {
       user: req.user,
-      login: (req.logged_in ? "yes" : 'none')
+      login: (req.isAuthenticated() ? "yes" : 'none')
   });
 });
 
 app.get("/crew", async function(req, res) {
     res.render(__dirname+'/views/crew.ejs', {
         user: req.user,
-        login: (req.logged_in ? "yes" : 'none')
+        login: (req.isAuthenticated() ? "yes" : 'none')
     });
 });
 
 app.get("/infractions", async function(req, res) {
     res.render(__dirname+'/views/infractions.ejs', {
         user: req.user,
-        login: (req.logged_in ? "yes" : 'none')
+        login: (req.isAuthenticated() ? "yes" : 'none')
     });
 });
 
 app.get("/protocols", async function(req, res) {
     res.render(__dirname+'/views/protocols.ejs', {
         user: req.user,
-        login: (req.logged_in ? "yes" : 'none')
+        login: (req.isAuthenticated() ? "yes" : 'none')
     });
 });
 
 app.get("/recruitment", CheckAuth, async function(req, res) {
     res.render(__dirname+'/views/recruitment.ejs', {
         user: req.user,
-        login: (req.logged_in ? "yes" : 'none')
+        login: (req.isAuthenticated() ? "yes" : 'none')
     });
 });
 
 app.get("/rules", async function(req, res) {
     res.render(__dirname+'/views/rules.ejs', {
         user: req.user,
-        login: (req.logged_in ? "yes" : 'none')
+        login: (req.isAuthenticated() ? "yes" : 'none')
     });
 });
 
@@ -240,7 +228,7 @@ app.get("/quiz", CheckAuth, async function(req, res) {
   if (!allowed.includes(req.user.id)) return res.redirect("/");
   res.render(__dirname+'/views/quiz.ejs', {
       user: req.user,
-      login: (req.logged_in ? "yes" : 'none')
+      login: (req.isAuthenticated() ? "yes" : 'none')
   });
   allowed = allowed.filter(x => x !== req.user.id);
 });
