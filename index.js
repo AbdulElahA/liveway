@@ -21,7 +21,7 @@ const oneDayMs = 24 * oneHourMs
 
 const dynamoOpts = {
   table: {
-    name: "kind-plum-vulture-tieCyclicDb",
+    name: "kind-plum-vulture-tieCyclicDB",
     hashKey: 'pk',
     hashPrefix: 'sid_',
     sortKey: 'sk',
