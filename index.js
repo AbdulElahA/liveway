@@ -16,6 +16,8 @@ const Eris = require("eris");
 const helmet = require("helmet");
 
 const Constants = Eris.Constants;
+const oneHourMs = 60 * 60 * 1000
+const oneDayMs = 24 * oneHourMs
 
 const dynamoOpts = {
   table: {
