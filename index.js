@@ -69,6 +69,7 @@ app
     session({
       secret: "VeyWP@6Fy9e83W@qId$#S0mE0iKayXwMJ!1IZ&V&gLnrnFfjq731YM8RnmESB9r7G2S4@E$uIESEwK#K@gOq7D9P3uG2Mzl&Ocx",
       resave: false,
+      store: store,
       saveUninitialized: false
     })
   )
