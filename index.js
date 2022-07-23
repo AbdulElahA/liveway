@@ -21,7 +21,7 @@ const oneDayMs = 24 * oneHourMs
 
 const dynamoOpts = {
   table: {
-    name: process.env.CYCLIC_DB,
+    name: "sessions",
     hashKey: 'pk',
     hashPrefix: 'sid_',
     sortKey: 'sk',
