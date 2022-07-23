@@ -12,6 +12,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 const Eris = require("eris");
+const url = require("url");
 
 const Constants = Eris.Constants;
 
