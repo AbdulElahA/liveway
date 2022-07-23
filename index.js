@@ -29,30 +29,23 @@ bot.on("ready", () => {
   console.log("Ready!");
 });
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
-});
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+  passport.deserializeUser((obj, done) => {
+    done(null, obj);
+  });
 
-var scopes = ["identify", "guilds"];
+  passport.use(new Strategy({
+    clientID: process.env.ID,
+    clientSecret: process.env.SECRET,
+    callbackURL: `${process.env.WEBSITEURL}/login/callback`,
+    scope: ["identify", "guilds"]
+  },
+  (accessToken, refreshToken, profile, done) => {
+    process.nextTick(() => done(null, profile));
+  }));
 
-passport.use(
-  new Strategy(
-    {
-      clientID: process.env.ID,
-      clientSecret: process.env.SECRET,
-      callbackURL: `${process.env.WEBSITEURL}/login`,
-      scope: scopes
-    },
-    function(accessToken, refreshToken, profile, done) {
-      process.nextTick(function() {
-        return done(null, profile);
-      });
-    }
-  )
-);
 
 app
   .use(
