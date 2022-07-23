@@ -241,10 +241,6 @@ io.on('connection', async (socket) => {
         let type = interaction.data.custom_id == 'no' ? false : true
         io.emit('type', type);
         if(type) allowed.push(interaction.message.embeds[0].author.icon_url.split("/")[4]);
-<<<<<<< HEAD
-=======
-        await interaction.deleteOriginalMessage()
->>>>>>> 52034b93be696195b5817b35f9e41ff726759daa
         await interaction.createMessage({ content: "✅ | **تم!**", flags: 64 })
         await bot.deleteMessage(interaction.channel.id, interaction.message.id)
     }
