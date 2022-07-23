@@ -240,7 +240,7 @@ io.on('connection', async (socket) => {
         let type = interaction.data.custom_id == 'no' ? false : true
         io.emit('type', type);
         if(type) allowed.push(interaction.message.embeds[0].author.icon_url.split("/")[4]);
-        await interaction.message.delete()
+        await interaction.deleteOriginalMessage()
         await interaction.createMessage({ content: "✅ | **تم!**", flags: 64 })
     }
   });
