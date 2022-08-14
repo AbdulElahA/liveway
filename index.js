@@ -222,7 +222,7 @@ app.post("/api/recruitment", async function(req, res) {
       res.send("Done!")
     } catch (error) {
         res.send(error)
-        console.log(error);
+        console.log("1"+error);
     }
    
 });
