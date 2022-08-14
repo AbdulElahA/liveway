@@ -154,7 +154,7 @@ app.get("/rules", async function(req, res) {
 
 app.post("/api/recruitment", async function(req, res) {
     try {
-        console.log("request")
+        if(!req.body || !req.body.username || !req.body.name || !req.body.age || !req.body.playerID || !req.body.require || !req.body.reason) return;
         bot.createMessage("999031978626121839", {
           components: [
               {
